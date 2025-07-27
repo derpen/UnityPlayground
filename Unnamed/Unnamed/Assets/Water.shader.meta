@@ -4,7 +4,8 @@ timeCreated: 1753537008
 licenseType: Free
 ShaderImporter:
   externalObjects: {}
-  defaultTextures: []
+  defaultTextures:
+  - _HeightMap: {fileID: 2800000, guid: 5c1019c81209de84dbe62a5446e94b3e, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

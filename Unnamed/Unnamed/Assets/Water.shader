@@ -2,6 +2,7 @@
 	Properties
     {
 		_Color ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
+		_HeightMap ("Height Map", 2D) = "" {}
     }
     SubShader
     {
@@ -18,8 +19,8 @@
 
             struct appdata
             {
-                float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 vertex : POSITION;
             };
 
             struct v2f
@@ -29,19 +30,35 @@
                 float4 vertex : SV_POSITION;
             };
 
+			sampler2D _HeightMap;
+			float4 _MainTex_ST;
+
             float4 _Color;
-			float GetTime()
+			float GetTime(float speed)
 			{
-				return _SinTime.z; // Sine of time: (t/8, t/4, t/2, t) (I have no idea why its done like this)
+				return sin(_Time.y * speed); // Time since level load (t/20, t, t*2, t*3), use to animate things inside the shaders. (Idk why they do it like this)
 			}
             
             v2f vert (appdata v)
             {
                 v2f o;
-				v.vertex.xyz += float3(0.0, GetTime(), 0.0);
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+
+				// Try to do wave here
+				// float speed = 3.0;
+				// float wave = GetTime(speed);
+				float wave = _Time.y;
+
+				v.uv.x += wave / 2.0;
+				v.uv.y += wave / 2.0;
+
+				float4 texCoord = float4(v.uv.x, v.uv.y, .0, 0);
+				float height = tex2Dlod (_HeightMap, texCoord).x;
+				v.vertex.y += height;
+
+				// Built in shit to apply the uv
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 UNITY_TRANSFER_FOG(o,o.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 return o;
             }
             
