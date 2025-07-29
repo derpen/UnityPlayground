@@ -4,6 +4,8 @@
         _Color ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		_WaveSpeed("WaveSpeed", Range(0.0, 10.0)) = 4.0
         _Tess ("Tessellation", Range(1,32)) = 4
+		_MinTessDistance("Min Dist Distance", Range(0.0, 1000.0)) = 5.0
+		_MaxTessDistance("Max Dist Distance", Range(0.0, 1000.0)) = 25.0
         _HeightMap ("Height Map", 2D) = "white" {}
     }
     SubShader
@@ -24,11 +26,11 @@
         };
 
         float _Tess;
+		float _MinTessDistance;
+		float _MaxTessDistance;
 
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
-            float minDist = 10.0;
-            float maxDist = 25.0;
-            return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
+            return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, _MinTessDistance, _MaxTessDistance, _Tess);
         }
 
         sampler2D _HeightMap;
@@ -37,14 +39,15 @@
 
         void disp (inout appdata v)
         {
+			// Wave ?
+			// float timeScale = sin(_Time.y * _WaveSpeed); // Time since level load (t/20, t, t*2, t*3), use to animate things inside the shaders. (Idk why they do it like this)
+			float timeScale = _Time.y * _WaveSpeed;
+			v.texcoord.x += timeScale / 2.0;
+			v.texcoord.y += timeScale / 2.0;
+
             float4 texCoord = float4(v.texcoord.xy, 0, 0); // what even is this lol
             float height = tex2Dlod(_HeightMap, texCoord).x;
-			float timeScale = sin(_Time.y * _WaveSpeed); // Time since level load (t/20, t, t*2, t*3), use to animate things inside the shaders. (Idk why they do it like this)
-            v.vertex.y += height * timeScale;
-
-			// // Wave ?
-			// v.texcoord.x += timeScale / 2.0;
-			// v.texcoord.y += timeScale / 2.0;
+            v.vertex.y += height;
         }
 
         struct Input {
