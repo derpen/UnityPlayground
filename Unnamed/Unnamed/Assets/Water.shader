@@ -7,6 +7,8 @@
 		_MinTessDistance("Min Dist Distance", Range(0.0, 1000.0)) = 5.0
 		_MaxTessDistance("Max Dist Distance", Range(0.0, 1000.0)) = 25.0
         _HeightMap ("Height Map", 2D) = "white" {}
+		_Metallic ("Metallic", Range(0, 1)) = 0.0
+        _Smoothness ("Smoothness", Range(0, 1)) = 0.1
     }
     SubShader
     {
@@ -14,7 +16,7 @@
         LOD 300
 
         CGPROGRAM
-        #pragma surface surf BlinnPhong addshadow fullforwardshadows vertex:disp tessellate:tessDistance nolightmap
+        #pragma surface surf Standard addshadow fullforwardshadows vertex:disp tessellate:tessDistance nolightmap
         #pragma target 4.6
         #include "Tessellation.cginc"
 
@@ -50,17 +52,27 @@
             v.vertex.y += height;
         }
 
-        struct Input {
-            float2 uv_HeightMap;
+        fixed4 _Color;
+		half _Metallic;
+        half _Smoothness;
+
+		struct Input {
+			// Not sure what is this for
+            float2 uv_MainTex;
         };
 
-        fixed4 _Color;
-
-        void surf (Input IN, inout SurfaceOutput o) {
+        void surf (Input IN, inout SurfaceOutputStandard o) {
             fixed4 c = _Color;
             o.Albedo = c.rgb;
-            o.Specular = 0.2;
-            o.Gloss = 1.0;
+
+			// float4 texCoord = fixed4(IN.uv_MainTex.x, IN.uv_MainTex.y, 0, 0);
+			float4 normal = tex2D(_HeightMap, IN.uv_MainTex);
+
+			o.Normal = normal.rgb;
+
+            o.Metallic = _Metallic;
+            o.Smoothness = _Smoothness;
+            o.Alpha = c.a;
         }
         ENDCG
     }
