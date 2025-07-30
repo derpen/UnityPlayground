@@ -3,10 +3,11 @@
     {
         _Color ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		_WaveSpeed("WaveSpeed", Range(0.0, 10.0)) = 4.0
+		_MainTex("Height map texture", 2D) = "" {}
+		_Octaves("Num. of octaves", Range(1, 32)) = 6.0
         _Tess ("Tessellation", Range(1,32)) = 4
 		_MinTessDistance("Min Dist Distance", Range(0.0, 1000.0)) = 5.0
 		_MaxTessDistance("Max Dist Distance", Range(0.0, 1000.0)) = 25.0
-        _HeightMap ("Height Map", 2D) = "white" {}
 		_Metallic ("Metallic", Range(0, 1)) = 0.0
         _Smoothness ("Smoothness", Range(0, 1)) = 0.1
     }
@@ -35,44 +36,76 @@
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, _MinTessDistance, _MaxTessDistance, _Tess);
         }
 
-        sampler2D _HeightMap;
-        float4 _HeightMap_ST;
+		// FRACTAL BROWNIAN MOTION START
+		//
+		//
+		float hash (float2 n)
+		{
+			return frac(sin(dot(n, float2(123.456789, 987.654321))) * 54321.9876 );
+		}
+
+		float noise(float2 p)
+		{
+			float2 i = floor(p);
+			float2 u = smoothstep(0.0, 1.0, frac(p));
+			float a = hash(i + float2(0,0));
+			float b = hash(i + float2(1,0));
+			float c = hash(i + float2(0,1));
+			float d = hash(i + float2(1,1));
+			float r = lerp(lerp(a, b, u.x),lerp(c, d, u.x), u.y);
+			return r * r;
+		}
+
+		float fbm(float2 p, int octaves)
+		{
+			float value = 0.0;
+			float amplitude = 0.5;
+			float e = 3.0;
+			for (int i = 0; i < octaves; ++ i)
+			{
+				value += amplitude * noise(p); 
+				p = p * e; 
+				amplitude *= 0.5; 
+				e *= 0.95;
+			}
+			return value;
+		}
+		//
+		//
+		// FRACTAL BROWNIAN MOTION END
+
 		float _WaveSpeed;
+		float _Octaves;
 
         void disp (inout appdata v)
         {
-			// Wave ?
-			// float timeScale = sin(_Time.y * _WaveSpeed); // Time since level load (t/20, t, t*2, t*3), use to animate things inside the shaders. (Idk why they do it like this)
 			float timeScale = _Time.y * _WaveSpeed;
-			v.texcoord.x += timeScale / 2.0;
-			v.texcoord.y += timeScale / 2.0;
-
-            float4 texCoord = float4(v.texcoord.xy, 0, 0); // what even is this lol
-            float height = tex2Dlod(_HeightMap, texCoord).x;
+            float height = fbm(v.texcoord + float2(timeScale, timeScale), _Octaves);
             v.vertex.y += height;
-        }
+		}
 
+
+		sampler2D _MainTex;
         fixed4 _Color;
 		half _Metallic;
         half _Smoothness;
 
 		struct Input {
-			// Not sure what is this for
             float2 uv_MainTex;
         };
 
         void surf (Input IN, inout SurfaceOutputStandard o) {
-            fixed4 c = _Color;
-            o.Albedo = c.rgb;
+			// Testing fbm
+			float timeScale = _Time.y * _WaveSpeed;
+			float fbm_color = fbm(IN.uv_MainTex + float2(timeScale, timeScale), _Octaves);
+			// o.Albedo = float3(0.0, 0.0, 0.0);
+			// o.Albedo += fbm_color;
+			o.Normal = fixed3(fbm_color, fbm_color, fbm_color);
 
-			// float4 texCoord = fixed4(IN.uv_MainTex.x, IN.uv_MainTex.y, 0, 0);
-			float4 normal = tex2D(_HeightMap, IN.uv_MainTex);
-
-			o.Normal = normal.rgb;
+			o.Albedo = _Color.rgb;
 
             o.Metallic = _Metallic;
             o.Smoothness = _Smoothness;
-            o.Alpha = c.a;
         }
         ENDCG
     }
