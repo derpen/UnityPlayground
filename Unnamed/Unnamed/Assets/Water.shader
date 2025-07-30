@@ -3,6 +3,7 @@
     {
         _Color ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		_WaveSpeed("WaveSpeed", Range(0.0, 10.0)) = 4.0
+		_HeightScale("Height Scale", Range(0.0, 32.0)) = 1.0
 		_MainTex("Height map texture", 2D) = "" {}
 		_Octaves("Num. of octaves", Range(1, 32)) = 6.0
         _Tess ("Tessellation", Range(1,32)) = 4
@@ -76,12 +77,13 @@
 
 		float _WaveSpeed;
 		float _Octaves;
+		float _HeightScale;
 
         void disp (inout appdata v)
         {
 			float timeScale = _Time.y * _WaveSpeed;
             float height = fbm(v.texcoord + float2(timeScale, timeScale), _Octaves);
-            v.vertex.y += height;
+            v.vertex.y += height * _HeightScale;
 		}
 
 
@@ -95,12 +97,9 @@
         };
 
         void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Testing fbm
 			float timeScale = _Time.y * _WaveSpeed;
 			float fbm_color = fbm(IN.uv_MainTex + float2(timeScale, timeScale), _Octaves);
-			// o.Albedo = float3(0.0, 0.0, 0.0);
-			// o.Albedo += fbm_color;
-			o.Normal = fixed3(fbm_color, fbm_color, fbm_color);
+			o.Normal = UnpackNormal(fixed4(fbm_color, fbm_color, fbm_color, 0.0));
 
 			o.Albedo = _Color.rgb;
 
