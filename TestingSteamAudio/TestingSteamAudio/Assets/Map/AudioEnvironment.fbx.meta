@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: bba66aa4fd76b0044a87891b3ab8f460
+timeCreated: 1755012625
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: GoodMesh_Huge
+    100004: GoodMesh_Huge_window
+    100006: GoodMesh_Small
+    100008: GoodMesh_Small_Window
+    100010: GoodMesh_Well
+    100012: Plane
+    100014: Playground_Cube
+    100016: Playground_Cube.001
+    100018: Playground_Cube.002
+    100020: Playground_Cube.003
+    100022: Playground_Cube.004
+    100024: Playground_Cube.005
+    100026: Playground_Cube.006
+    100028: ShitMesh_Huge
+    100030: ShitMesh_Small
+    100032: ShitMesh_Well
+    100034: Tunnel
+    100036: Tunnel.001
+    400000: //RootNode
+    400002: GoodMesh_Huge
+    400004: GoodMesh_Huge_window
+    400006: GoodMesh_Small
+    400008: GoodMesh_Small_Window
+    400010: GoodMesh_Well
+    400012: Plane
+    400014: Playground_Cube
+    400016: Playground_Cube.001
+    400018: Playground_Cube.002
+    400020: Playground_Cube.003
+    400022: Playground_Cube.004
+    400024: Playground_Cube.005
+    400026: Playground_Cube.006
+    400028: ShitMesh_Huge
+    400030: ShitMesh_Small
+    400032: ShitMesh_Well
+    400034: Tunnel
+    400036: Tunnel.001
+    2100000: No Name
+    2100002: Base
+    2300000: GoodMesh_Huge
+    2300002: GoodMesh_Huge_window
+    2300004: GoodMesh_Small
+    2300006: GoodMesh_Small_Window
+    2300008: GoodMesh_Well
+    2300010: Plane
+    2300012: Playground_Cube
+    2300014: Playground_Cube.001
+    2300016: Playground_Cube.002
+    2300018: Playground_Cube.003
+    2300020: Playground_Cube.004
+    2300022: Playground_Cube.005
+    2300024: Playground_Cube.006
+    2300026: ShitMesh_Huge
+    2300028: ShitMesh_Small
+    2300030: ShitMesh_Well
+    2300032: Tunnel
+    2300034: Tunnel.001
+    3300000: GoodMesh_Huge
+    3300002: GoodMesh_Huge_window
+    3300004: GoodMesh_Small
+    3300006: GoodMesh_Small_Window
+    3300008: GoodMesh_Well
+    3300010: Plane
+    3300012: Playground_Cube
+    3300014: Playground_Cube.001
+    3300016: Playground_Cube.002
+    3300018: Playground_Cube.003
+    3300020: Playground_Cube.004
+    3300022: Playground_Cube.005
+    3300024: Playground_Cube.006
+    3300026: ShitMesh_Huge
+    3300028: ShitMesh_Small
+    3300030: ShitMesh_Well
+    3300032: Tunnel
+    3300034: Tunnel.001
+    4300000: GoodMesh_Huge
+    4300002: GoodMesh_Huge_window
+    4300004: GoodMesh_Small
+    4300006: GoodMesh_Small_Window
+    4300008: GoodMesh_Well
+    4300010: Plane
+    4300012: Playground_Cube
+    4300014: Playground_Cube.001
+    4300016: Playground_Cube.002
+    4300018: Playground_Cube.003
+    4300020: Playground_Cube.004
+    4300022: Playground_Cube.005
+    4300024: Playground_Cube.006
+    4300026: ShitMesh_Huge
+    4300028: ShitMesh_Small
+    4300030: ShitMesh_Well
+    4300032: Tunnel
+    4300034: Tunnel.001
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
